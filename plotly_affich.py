@@ -79,7 +79,7 @@ trace2 = Scatter(
 layout = Layout(
     title='Raspberry Pi Streaming Sensor Data'
 )
-fig = Figure(data=[trace1], layout=layout)
+fig = Figure(data=[trace1,trace2], layout=layout)
 
 print py.plot(fig, filename='Raspberry Pi Streaming Example Values')
 
@@ -93,6 +93,6 @@ stream.open()
 while True:
 	#sensor_data = readadc.readadc(sensor_pin, readadc.PINS.SPICLK, readadc.PINS.SPIMOSI, readadc.PINS.SPIMISO, readadc.PINS.SPICS)
 	x, y, z = accel.read()
-	stream.write({'x': datetime.datetime.now(), 'y': [x,y]})
+	stream.write({'x': datetime.datetime.now(), 'y': [x, y]})
 	time.sleep(0.1) # delay between stream posts
 	
