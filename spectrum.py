@@ -35,7 +35,7 @@ SPECTROGRAM_LENGTH = 100
 # Create the Chaco plot.
 #============================================================================
 
-
+accel = Adafruit_ADXL345.ADXL345()
 def _create_plot_component(obj):
     # Setup the spectrum plot
     frequencies = linspace(0.0, float(SAMPLING_RATE)/2, num=NUM_SAMPLES/2)
@@ -105,7 +105,6 @@ def get_audio_data():
                      input=True, frames_per_buffer=NUM_SAMPLES)
     audio_data  = fromstring(_stream.read(NUM_SAMPLES), dtype=short)
     normalized_data = audio_data / 32768.0
-    accel = Adafruit_ADXL345.ADXL345()
     x, y, z=accel.read()
     return (abs(fft(x))[:NUM_SAMPLES/2], x)
 
