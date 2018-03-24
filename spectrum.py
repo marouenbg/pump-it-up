@@ -35,9 +35,6 @@ SPECTROGRAM_LENGTH = 100
 # Create the Chaco plot.
 #============================================================================
 
-# Create an ADXL345 instance.
-accel = Adafruit_ADXL345.ADXL345()
-x, y, z=accel.read()
 
 def _create_plot_component(obj):
     # Setup the spectrum plot
@@ -108,13 +105,16 @@ def get_audio_data():
                      input=True, frames_per_buffer=NUM_SAMPLES)
     audio_data  = fromstring(_stream.read(NUM_SAMPLES), dtype=short)
     normalized_data = audio_data / 32768.0
-    return (abs(fft(normalized_data))[:NUM_SAMPLES/2], normalized_data)
+    accel = Adafruit_ADXL345.ADXL345()
+    x, y, z=accel.read()
+    return (abs(fft(x))[:NUM_SAMPLES/2], x)
 
 
 # HasTraits class that supplies the callable for the timer event.
 class TimerController(HasTraits):
 
     def onTimer(self, *args):
+        # Create an ADXL345 instance.
         spectrum, time = get_audio_data()
         self.spectrum_data.set_data('amplitude', spectrum)
         self.time_data.set_data('amplitude', time)
