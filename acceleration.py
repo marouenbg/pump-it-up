@@ -48,7 +48,7 @@ xAccl = ((data1 & 0x03) * 256) + data0
 
 if xAccl > 511 :	
 
-xAccl -= 1024
+    xAccl -= 1024
 
 # ADXL345 address, 0x53(83)
 
@@ -66,7 +66,7 @@ yAccl = ((data1 & 0x03) * 256) + data0
 
 if yAccl > 511 :	
 
-yAccl -= 1024
+    yAccl -= 1024
 
 # ADXL345 address, 0x53(83)
 
