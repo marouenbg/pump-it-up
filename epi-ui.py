@@ -2,7 +2,7 @@ import time
 import sys
 import smbus
 import Adafruit_ADXL345
-
+import numpy as np
 from chaco.default_colormaps import hot
 from numpy import zeros, linspace, short, fromstring, hstack, transpose, sin
 from traits.api import (Array, Callable, Enum, Float, HasTraits, Instance, Int,
