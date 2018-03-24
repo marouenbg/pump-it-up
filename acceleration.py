@@ -84,7 +84,7 @@ zAccl = ((data1 & 0x03) * 256) + data0
 
 if zAccl > 511 :	
 
-zAccl -= 1024
+    zAccl -= 1024
 
 # Output data to screen
 
