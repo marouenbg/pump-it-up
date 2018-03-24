@@ -159,7 +159,6 @@ class Controller(HasTraits):
 
     def _distribution_type_changed(self):
         # This listens for a change in the type of distribution to use.
-        if self.distribution_type == "normal":
             while True:
                 # Read the X, Y, Z axis acceleration values and print them.
                 x, y, z = accel.read()
@@ -167,8 +166,6 @@ class Controller(HasTraits):
                 # Wait half a second and repeat.
                 time.sleep(0.5)
             self._generator = x
-        else:
-            self._generator = np.random.lognormal
 
 
 class DemoHandler(Handler):
