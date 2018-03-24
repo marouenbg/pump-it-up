@@ -35,10 +35,7 @@ SPECTROGRAM_LENGTH = 100
 # Create the Chaco plot.
 #============================================================================
 
-# Create an ADXL345 instance.
 accel = Adafruit_ADXL345.ADXL345()
-x, y, z=accel.read()
-
 def _create_plot_component(obj):
     # Setup the spectrum plot
     frequencies = linspace(0.0, float(SAMPLING_RATE)/2, num=NUM_SAMPLES/2)
@@ -51,9 +48,9 @@ def _create_plot_component(obj):
                            color="red")
     obj.spectrum_plot.padding = 50
     obj.spectrum_plot.title = "Spectrum"
-    spec_range = obj.spectrum_plot.plots.values()[0][0].value_mapper.range
-    spec_range.low = 0.0
-    spec_range.high = 5.0
+    #spec_range = obj.spectrum_plot.plots.values()[0][0].value_mapper.range
+    #spec_range.low = 0.0
+    #spec_range.high = 5.0
     obj.spectrum_plot.index_axis.title = 'Frequency (Hz)'
     obj.spectrum_plot.value_axis.title = 'Amplitude'
 
@@ -108,21 +105,24 @@ def get_audio_data():
                      input=True, frames_per_buffer=NUM_SAMPLES)
     audio_data  = fromstring(_stream.read(NUM_SAMPLES), dtype=short)
     normalized_data = audio_data / 32768.0
-    return (abs(fft(normalized_data))[:NUM_SAMPLES/2], normalized_data)
+    x, y, z=accel.read()
+    return (abs(fft(accel.read()))[:NUM_SAMPLES/2], accel.read())
 
 
 # HasTraits class that supplies the callable for the timer event.
 class TimerController(HasTraits):
 
     def onTimer(self, *args):
+        # Create an ADXL345 instance.
+        x, y, z=accel.read()
         spectrum, time = get_audio_data()
-        self.spectrum_data.set_data('amplitude', spectrum)
-        self.time_data.set_data('amplitude', time)
+        self.spectrum_data.set_data('amplitude', x)
+        self.time_data.set_data('amplitude', x)
         spectrogram_data = self.spectrogram_plotdata.get_data('imagedata')
         spectrogram_data = hstack((spectrogram_data[:,1:],
                                    transpose([spectrum])))
 
-        self.spectrogram_plotdata.set_data('imagedata', spectrogram_data)
+        self.spectrogram_plotdata.set_data('imagedata', x)
         self.spectrum_plot.request_redraw()
         return
 
