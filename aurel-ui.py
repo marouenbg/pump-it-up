@@ -9,7 +9,7 @@ class LinePlot(HasTraits):
 
     traits_view = View(
         Item('plot', editor=ComponentEditor(), show_label=False),
-        width=500, height=500, resizable=True, title="Chaco Plot")
+        width=1000, height=700, resizable=False, title="Pump It")
 
     def _plot_default(self):
         x = linspace(-14, 14, 100)
