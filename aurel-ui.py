@@ -11,7 +11,7 @@ class PumpIt(HasTraits):
     gender = Enum('Male', 'Female')
 
     view = View(
-        Group(
+        VGroup(
             Label('An Unthemed Label'),
             Item('name'),
             Item('age'),
