@@ -7,7 +7,6 @@ import time # timer functions
 # axis acceleration values every half second.
 # Author: Tony DiCola
 # License: Public Domain
-import time
 
 # Import the ADXL345 module.
 import Adafruit_ADXL345
