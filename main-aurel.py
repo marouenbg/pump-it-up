@@ -86,11 +86,7 @@ class Viewer(HasTraits):
                               width=800,
                               height=380,
                               marker_size=2,
-                              show_label=False),
-    #           HGroup(spring, Item("plot_type", style='custom'), spring),
-                resizable = True,
-                buttons = ["OK"],
-                width=800, height=500)
+                              show_label=False))
 
 class Controller(HasTraits):
 
@@ -154,16 +150,6 @@ class Controller(HasTraits):
                 time.sleep(0.1)
             self._generator = x
 
-class DemoHandler(Handler):
-
-    def closed(self, info, is_ok):
-        """ Handles a dialog-based user interface being closed by the user.
-        Overridden here to stop the timer once the window is destroyed.
-        """
-
-        info.object.timer.Stop()
-        return
-
 class Demo(HasTraits):
     controller = Instance(Controller)
     viewer = Instance(Viewer, ())
@@ -190,7 +176,7 @@ class Demo(HasTraits):
 
 # NOTE: examples/demo/demo.py looks for a 'demo' or 'popup' or 'modal popup'
 # keyword when it executes this file, and displays a view for it.
-popup=Demo()
+popup = Demo()
 
 if __name__ == "__main__":
     popup.configure_traits()
