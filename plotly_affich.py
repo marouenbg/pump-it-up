@@ -97,7 +97,7 @@ stream.open()
 
 while True:
 	#sensor_data = readadc.readadc(sensor_pin, readadc.PINS.SPICLK, readadc.PINS.SPIMOSI, readadc.PINS.SPIMISO, readadc.PINS.SPICS)
-	#x, y, z = accel.read()
-	stream.write({'x': [datetime.datetime.now(),datetime.datetime.now()], 'y': accel.read()})
+	x, y, z = accel.read()
+	stream.write({'x': [datetime.datetime.now()], 'y': x},{'x': [datetime.datetime.now()], 'y': y})
 	time.sleep(0.1) # delay between stream posts
 	
