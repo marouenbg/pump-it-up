@@ -180,7 +180,7 @@ class ContainerExample(HasTraits):
         line = Plot(plotdata)
         line.plot(("x", "y"), type="line", color="blue")
 
-        container = HPlotContainer(Demo(), Demo())
+        container = HPlotContainer(line, scatter)
         return container
 
 if __name__ == "__main__":
