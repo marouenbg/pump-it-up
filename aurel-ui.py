@@ -8,8 +8,10 @@ class LinePlot(HasTraits):
     plot = Instance(Plot)
 
     traits_view = View(
-        Item('plot', editor=ComponentEditor(), show_label=False),
-        width=1000, height=700, resizable=False, title="Pump It")
+        Item('plot1', editor=ComponentEditor(), show_label=False),
+        Item('plot2', editor=ComponentEditor(), show_label=False),
+        Item('plot3', editor=ComponentEditor(), show_label=False),
+        width=1000, height=650, resizable=False, title="Pump It")
 
     def _plot_default(self):
         x = linspace(-14, 14, 100)
