@@ -145,7 +145,7 @@ class Controller(HasTraits):
         # Generate a new number and increment the tick count
 	x, y, z=accel.read()
         new_val = x
-        self.num_ticks += 1
+        self.num_ticks += 0.5
 
         # grab the existing data, truncate it, and append the new point.
         # This isn't the most efficient thing in the world but it works.
