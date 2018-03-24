@@ -106,7 +106,7 @@ def get_audio_data():
     audio_data  = fromstring(_stream.read(NUM_SAMPLES), dtype=short)
     normalized_data = audio_data / 32768.0
     x, y, z=accel.read()
-    return (abs(fft(x))[:NUM_SAMPLES/2], x)
+    return (abs(fft(accel.read()))[:NUM_SAMPLES/2], accel.read())
 
 
 # HasTraits class that supplies the callable for the timer event.
