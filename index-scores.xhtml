@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>SCORES Pump it up !</title>
+    <link rel="stylesheet" href="./bootstrap.css" />
+    <style type="text/css">
+        h1 {
+            font-size: 4rem;
+            font-weight: bold;
+        }
+
+        body.normale {
+            background-color: green;
+            color: #fff;
+        }
+
+        body.on {
+            background-color: red;
+        }
+
+        body.off {
+            background-color: grey;
+        }
+
+        table#stats {
+            margin:0 auto;
+        }
+
+        table#stats td {
+            border:1px solid;
+            padding:5px;
+            font-size:12px;
+            width: 20%;
+        }
+
+        table#stats tr td {
+            font-weight:bold;
+        }
+
+    </style>
+    <script type="application/javascript" src="jquery.js" />
+    <script type="application/javascript" src="chronometre.js" />
+</head>
+<body class="off" onload="chrono()">
+    <div style="text-align: center; margin: 0 auto;">
+        <br />
+        <h3>PHASE ACTUELLE</h3>
+        <h1 id="phase">OFF</h1>
+        <h3 id="chronotime">0:00:00</h3>
+        <br />
+        <table id="stats">
+            <thead>
+               <td>DURÉE</td>
+               <td>OFF</td>
+               <td>NORMALE</td>
+               <td>ON</td>
+            </thead>
+            <tr>
+               <td id="total">00:00:00</td>
+               <td id="cOff">1</td>
+               <td id="cNormale">0</td>
+               <td id="cOn">0</td>
+            </tr>
+        </table>
+    </div>
+
+    <script type="application/javascript">
+        $(document).keypress(function() {
+            switch(event.charCode) {
+                case 119:
+                    setOff();
+                    break;
+                case 120:
+                    setNormale();
+                    break;
+                case 99:
+                    setOn();
+                    break;
+            }
+        });
+    </script>
+</body>
+</html>
