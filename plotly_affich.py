@@ -10,7 +10,7 @@ import time # timer functions
 
 # Import the ADXL345 module.
 import Adafruit_ADXL345
-
+import datetime
 
 # Create an ADXL345 instance.
 accel = Adafruit_ADXL345.ADXL345()
