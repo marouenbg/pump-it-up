@@ -117,12 +117,12 @@ class TimerController(HasTraits):
         x, y, z=accel.read()
         spectrum, time = get_audio_data()
         self.spectrum_data.set_data('amplitude', x)
-        self.time_data.set_data('amplitude', time)
+        self.time_data.set_data('amplitude', x)
         spectrogram_data = self.spectrogram_plotdata.get_data('imagedata')
         spectrogram_data = hstack((spectrogram_data[:,1:],
                                    transpose([spectrum])))
 
-        self.spectrogram_plotdata.set_data('imagedata', spectrogram_data)
+        self.spectrogram_plotdata.set_data('imagedata', x)
         self.spectrum_plot.request_redraw()
         return
 
