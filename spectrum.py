@@ -114,8 +114,9 @@ class TimerController(HasTraits):
 
     def onTimer(self, *args):
         # Create an ADXL345 instance.
+        x, y, z=accel.read()
         spectrum, time = get_audio_data()
-        self.spectrum_data.set_data('amplitude', spectrum)
+        self.spectrum_data.set_data('amplitude', x)
         self.time_data.set_data('amplitude', time)
         spectrogram_data = self.spectrogram_plotdata.get_data('imagedata')
         spectrogram_data = hstack((spectrogram_data[:,1:],
