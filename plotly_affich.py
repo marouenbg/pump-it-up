@@ -70,7 +70,7 @@ trace1 = Scatter(
 )
 trace2 = Scatter(
     x=[],
-    z=[],
+    y=[],
     stream=dict(
         token=stream_token,
         maxpoints=200
