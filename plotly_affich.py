@@ -11,6 +11,7 @@ import time # timer functions
 # Import the ADXL345 module.
 import Adafruit_ADXL345
 import datetime
+from plotly import tools
 
 # Create an ADXL345 instance.
 accel = Adafruit_ADXL345.ADXL345()
@@ -77,9 +78,13 @@ trace2 = Scatter(
     )
 )
 layout = Layout(
-    title='Raspberry Pi Streaming Sensor Data'
+    title='Raspberry Pi Streaming Sensor Data',
+    
 )
 fig = Figure(data=[trace1,trace2], layout=layout)
+fig = tools.make_subplots(rows=1, cols=2)
+fig.append_trace(trace1, 1, 1)
+fig.append_trace(trace2, 1, 2)
 
 print py.plot(fig, filename='Raspberry Pi Streaming Example Values')
 
