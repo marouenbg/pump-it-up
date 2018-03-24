@@ -165,7 +165,7 @@ class Controller(HasTraits):
                 x, y, z = accel.read()
                 print('X={0}, Y={1}, Z={2}'.format(x, y, z))
                 # Wait half a second and repeat.
-                time.sleep(0.5)
+                time.sleep(0.1)
             self._generator = x
 
 
