@@ -5,12 +5,12 @@ from chaco.api import Plot, ArrayPlotData
 from enable.api import ComponentEditor
 
 class LinePlot(HasTraits):
-    plot1 = Instance(Plot)
+    plot = Instance(Plot)
     plot2 = Instance(Plot)
     plot3 = Instance(Plot)
 
     traits_view = View(
-        Item('plot1', editor=ComponentEditor(), show_label=False),
+        Item('plot', editor=ComponentEditor(), show_label=False),
         Item('plot2', editor=ComponentEditor(), show_label=False),
         Item('plot3', editor=ComponentEditor(), show_label=False),
         width=1000, height=650, resizable=False, title="Pump It")
