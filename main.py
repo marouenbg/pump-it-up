@@ -112,7 +112,7 @@ class Controller(HasTraits):
     viewer = Instance(Viewer)
 
     # Some parameters controller the random signal that will be generated
-    distribution_type = Enum("normal", "lognormal")
+    distribution_type = Enum("normal")
     mean = Float(0.0)
     stddev = Float(1.0)
 
@@ -143,7 +143,8 @@ class Controller(HasTraits):
         of our viewer object.
         """
         # Generate a new number and increment the tick count
-        new_val = self._generator(self.mean, self.stddev)
+	x, y, z=accel.read()
+        new_val = x
         self.num_ticks += 1
 
         # grab the existing data, truncate it, and append the new point.
