@@ -4,6 +4,7 @@ from traitsui.api import Item, View
 from chaco.api import ArrayPlotData, HPlotContainer, Plot
 from enable.api import ComponentEditor
 
+
 class ContainerExample(HasTraits):
 
     plot = Instance(HPlotContainer)
