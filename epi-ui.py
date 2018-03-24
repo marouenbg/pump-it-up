@@ -1,7 +1,8 @@
 import time
+import sys
 import smbus
 import Adafruit_ADXL345
-
+import numpy as np
 from chaco.default_colormaps import hot
 from numpy import zeros, linspace, short, fromstring, hstack, transpose, sin
 from traits.api import (Array, Callable, Enum, Float, HasTraits, Instance, Int,
@@ -21,6 +22,7 @@ accel = Adafruit_ADXL345.ADXL345()
 # Get I2C bus
 bus = smbus.SMBus(1)
 
+
 def _create_plot_component(obj):
     # Setup the xaxis plot
     frequencies = linspace(0.0, float(SAMPLING_RATE)/2, num=NUM_SAMPLES/2)
@@ -39,25 +41,28 @@ def _create_plot_component(obj):
     obj.spectrum_plot.index_axis.title = 'Frequency (Hz)'
     obj.spectrum_plot.value_axis.title = 'Amplitude'
 
-    yaxis = linspace(0.0, float(SAMPLING_RATE) / 2, num=NUM_SAMPLES / 2)
-    obj.yaxis_data = ArrayPlotData(frequency=yaxis)
-    empty_amplitude = zeros(NUM_SAMPLES / 2)
-    obj.yaxis_data.set_data('amplitude', empty_amplitude)
-
-    obj.yaxis_plot = Plot(obj.spectrum_data)
-    obj.yaxis_plot.plot(("frequency", "amplitude"), name="yaxis",
-                           color="red")
-    obj.yaxis_plot.padding = 50
-    obj.yaxis_plot.title = "Spectrum"
-    spec_range = obj.yaxis_plot.plots.values()[0][0].value_mapper.range
-    spec_range.low = 0.0
-    spec_range.high = 5.0
-    obj.yaxis_plot.index_axis.title = 'Frequency (Hz)'
-    obj.yaxis_plot.value_axis.title = 'Amplitude'
+    # Setup yaxis plot
+    spectrogram_data = zeros((NUM_SAMPLES / 2, SPECTROGRAM_LENGTH))
+    obj.spectrogram_plotdata = ArrayPlotData()
+    obj.spectrogram_plotdata.set_data('imagedata', spectrogram_data)
+    spectrogram_plot = Plot(obj.spectrogram_plotdata)
+    max_time = float(SPECTROGRAM_LENGTH * NUM_SAMPLES) / SAMPLING_RATE
+    max_freq = float(SAMPLING_RATE / 2)
+    spectrogram_plot.img_plot('imagedata',
+                              name='Spectrogram',
+                              xbounds=(0, max_time),
+                              ybounds=(0, max_freq),
+                              colormap=hot,
+                              )
+    range_obj = spectrogram_plot.plots['Spectrogram'][0].value_mapper.range
+    range_obj.high = 5
+    range_obj.low = 0.0
+    spectrogram_plot.title = 'Spectrogram'
+    obj.spectrogram_plot = spectrogram_plot
 
     container = HPlotContainer()
     container.add(obj.spectrum_plot)
-    container.add(obj.yaxis)
+    container.add(obj.spectrogram_plot)
 
     return container
 
@@ -74,7 +79,6 @@ class DemoHandler(Handler):
 
 class Controller(HasTraits):
     # A reference to the plot viewer object
-    viewer = Instance(Viewer)
 
     # Some parameters controller the random signal that will be generated
     distribution_type = Enum("normal")
@@ -220,8 +224,10 @@ class Controller(HasTraits):
             time.sleep(0.1)
         self._generator = x
 
-size = (900,500)
+
+size = (900, 500)
 title = "Audio Spectrum"
+
 
 class Demo(HasTraits):
 
@@ -233,7 +239,7 @@ class Demo(HasTraits):
                     Group(
                         Item('plot', editor=ComponentEditor(size=size),
                              show_label=False),
-                        orientation = "vertical"),
+                        orientation="vertical"),
                     resizable=True, title=title,
                     width=size[0], height=size[1],
                     handler=DemoHandler
@@ -255,6 +261,7 @@ class Demo(HasTraits):
         # starts and not when the demo object is created.
         self.timer = Timer(20, self.controller.onTimer)
         return super(Demo, self).configure_traits(*args, **kws)
+
 
 popup = Demo()
 
