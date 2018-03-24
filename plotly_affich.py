@@ -70,7 +70,7 @@ trace1 = Scatter(
 )
 trace2 = Scatter(
     x=[],
-    y=[],
+    z=[],
     stream=dict(
         token=stream_token,
         maxpoints=200
@@ -93,6 +93,6 @@ stream.open()
 while True:
 	#sensor_data = readadc.readadc(sensor_pin, readadc.PINS.SPICLK, readadc.PINS.SPIMOSI, readadc.PINS.SPIMISO, readadc.PINS.SPICS)
 	x, y, z = accel.read()
-	stream.write({'x': datetime.datetime.now(), 'y': x, 'x': datetime.datetime.now(), 'y': y})
+	stream.write({'x': datetime.datetime.now(), 'y': y, 'z': z})
 	time.sleep(0.1) # delay between stream posts
 	
