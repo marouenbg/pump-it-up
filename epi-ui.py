@@ -1,4 +1,5 @@
 import time
+import sys
 import smbus
 import Adafruit_ADXL345
 
@@ -46,7 +47,7 @@ def _create_plot_component(obj):
 
     obj.yaxis_plot = Plot(obj.spectrum_data)
     obj.yaxis_plot.plot(("frequency", "amplitude"), name="yaxis",
-                           color="red")
+                        color="red")
     obj.yaxis_plot.padding = 50
     obj.yaxis_plot.title = "Spectrum"
     spec_range = obj.yaxis_plot.plots.values()[0][0].value_mapper.range
@@ -74,7 +75,6 @@ class DemoHandler(Handler):
 
 class Controller(HasTraits):
     # A reference to the plot viewer object
-    viewer = Instance(Viewer)
 
     # Some parameters controller the random signal that will be generated
     distribution_type = Enum("normal")
@@ -220,8 +220,10 @@ class Controller(HasTraits):
             time.sleep(0.1)
         self._generator = x
 
-size = (900,500)
+
+size = (900, 500)
 title = "Audio Spectrum"
+
 
 class Demo(HasTraits):
 
@@ -233,7 +235,7 @@ class Demo(HasTraits):
                     Group(
                         Item('plot', editor=ComponentEditor(size=size),
                              show_label=False),
-                        orientation = "vertical"),
+                        orientation="vertical"),
                     resizable=True, title=title,
                     width=size[0], height=size[1],
                     handler=DemoHandler
@@ -255,6 +257,7 @@ class Demo(HasTraits):
         # starts and not when the demo object is created.
         self.timer = Timer(20, self.controller.onTimer)
         return super(Demo, self).configure_traits(*args, **kws)
+
 
 popup = Demo()
 
