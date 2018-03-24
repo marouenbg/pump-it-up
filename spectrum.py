@@ -24,6 +24,8 @@ from pyface.timer.api import Timer
 
 # Chaco imports
 from chaco.api import Plot, ArrayPlotData, HPlotContainer
+# Import the ADXL345 module.
+import Adafruit_ADXL345
 
 NUM_SAMPLES = 1024
 SAMPLING_RATE = 11025
@@ -32,6 +34,10 @@ SPECTROGRAM_LENGTH = 100
 #============================================================================
 # Create the Chaco plot.
 #============================================================================
+
+# Create an ADXL345 instance.
+accel = Adafruit_ADXL345.ADXL345()
+x, y, z=accel.read()
 
 def _create_plot_component(obj):
     # Setup the spectrum plot
