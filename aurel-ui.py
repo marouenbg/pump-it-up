@@ -1,28 +1,29 @@
 from numpy import linspace, sin
-from traits.api import HasTraits, Instance
-from traitsui.api import View, Item
+from traits.api import HasTraits, Str, Range, Float, Enum, Instance
+from traitsui.api import View, Group, Item, Label
 from chaco.api import Plot, ArrayPlotData
 from enable.api import ComponentEditor
 
-# unthemed.py -- Example of a TraitsUI without themes
-from traits.api import HasTraits, Str, Range, Float, Enum
-from traitsui.api import View, Group, Item, Label
-class Test ( HasTraits ):
+class LinePlot(HasTraits):
+    plot1 = Instance(Plot)
+    plot2 = Instance(Plot)
+    plot3 = Instance(Plot)
 
-    name   = Str
-    age    = Range( 1, 100 )
-    weight = Float
-    gender = Enum( 'Male', 'Female' )
+    traits_view = View(
+        Item('plot1', editor=ComponentEditor(), show_label=False),
+        Item('plot2', editor=ComponentEditor(), show_label=False),
+        Item('plot3', editor=ComponentEditor(), show_label=False),
+        width=1000, height=650, resizable=False, title="Pump It")
 
-    view = View(
-        Group(
-            Label( 'An Unthemed Label' ),
-            Item( 'name' ),
-            Item( 'age' ),
-            Item( 'weight' ),
-            Item( 'gender' )
-        ),
-        title   = 'Unthemed TraitsUI',
-    )
+    def _plot_default(self):
+        x = linspace(-14, 14, 100)
+        y = sin(x) * x**3
+        plotdata = ArrayPlotData(x=x, y=y)
 
-Test().configure_traits()
+        plot = Plot(plotdata)
+        plot.plot(("x", "y"), type="line", color="blue")
+        plot.title = "sin(x) * x^3"
+        return plot
+
+if __name__ == "__main__":
+    LinePlot().configure_traits()
