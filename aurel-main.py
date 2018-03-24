@@ -69,15 +69,13 @@ class Viewer(HasTraits):
     Chaco plot.
     """
     index = Array
-    data = Array
-
     plot_type = Enum("line", "scatter")
 
     view = View(ChacoPlotItem("index", "data",
                               type_trait="plot_type",
                               resizable=True,
                               x_label="Time",
-                              y_label="Signal",
+                              y_label="Tremblements",
                               color="blue",
                               bgcolor="white",
                               border_visible=True,
@@ -86,7 +84,11 @@ class Viewer(HasTraits):
                               width=800,
                               height=380,
                               marker_size=2,
-                              show_label=False))
+                              show_label=False),
+                HGroup(spring, Item("plot_type", style='custom'), spring),
+                resizable=True,
+                buttons=["OK"],
+                width=800, height=500)
 
 class Controller(HasTraits):
 
@@ -111,12 +113,7 @@ class Controller(HasTraits):
     # it can be set to any callable object.
     _generator = Trait(np.random.normal, Callable)
 
-    view = View(Group('distribution_type',
-                      'mean',
-                      'stddev',
-                      'max_num_points',
-                      orientation="vertical"),
-                      buttons=["OK", "Cancel"])
+    view = View(Group('distribution_type', 'mean', 'stddev', 'max_num_points', orientation="vertical"), buttons=["OK", "Cancel"])
 
     def timer_tick(self, *args):
         """
