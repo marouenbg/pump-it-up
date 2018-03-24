@@ -158,30 +158,5 @@ class Demo(HasTraits):
 popup=Demo()
 
 
-#if __name__ == "__main__":
-#    popup.configure_traits()
-
-
-class ContainerExample(HasTraits):
-
-    plot = Instance(HPlotContainer)
-
-    traits_view = View(Item('plot', editor=ComponentEditor(), show_label=False),
-                       width=1000, height=600, resizable=True, title="Chaco Plot")
-
-    def _plot_default(self):
-        x = linspace(-14, 14, 100)
-        y = sin(x) * x**3
-        plotdata = ArrayPlotData(x=x, y=y)
-
-        scatter = Plot(plotdata)
-        scatter.plot(("x", "y"), type="scatter", color="blue")
-
-        line = Plot(plotdata)
-        line.plot(("x", "y"), type="line", color="blue")
-
-        container = HPlotContainer(line, scatter)
-        return container
-
 if __name__ == "__main__":
-    ContainerExample().configure_traits()
+    popup.configure_traits()
