@@ -1,15 +1,19 @@
 from numpy import linspace, sin
-from traits.api import HasTraits, Instance
-from traitsui.api import View, Item
+from traits.api import HasTraits, Str, Range, Float, Enum, Instance
+from traitsui.api import View, Group, Item, Label
 from chaco.api import Plot, ArrayPlotData
 from enable.api import ComponentEditor
 
 class LinePlot(HasTraits):
     plot = Instance(Plot)
+    plot2 = Instance(Plot)
+    plot3 = Instance(Plot)
 
     traits_view = View(
-        Item('plot',editor=ComponentEditor(), show_label=False),
-        width=500, height=500, resizable=True, title="Chaco Plot")
+        Item('plot', editor=ComponentEditor(), show_label=False),
+        Item('plot2', editor=ComponentEditor(), show_label=False),
+        Item('plot3', editor=ComponentEditor(), show_label=False),
+        width=1000, height=650, resizable=False, title="Pump It")
 
     def _plot_default(self):
         x = linspace(-14, 14, 100)
