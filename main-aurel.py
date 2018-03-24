@@ -18,7 +18,6 @@ from pyface.timer.api import Timer
 # Chaco imports
 from chaco.chaco_plot_editor import ChacoPlotItem
 
-
 # Create an ADXL345 instance.
 accel = Adafruit_ADXL345.ADXL345()
 
@@ -70,7 +69,6 @@ class Viewer(HasTraits):
     Chaco plot.
     """
     index = Array
-
     data = Array
 
     plot_type = Enum("line", "scatter")
@@ -89,7 +87,7 @@ class Viewer(HasTraits):
                               height=380,
                               marker_size=2,
                               show_label=False),
-                HGroup(spring, Item("plot_type", style='custom'), spring),
+    #           HGroup(spring, Item("plot_type", style='custom'), spring),
                 resizable = True,
                 buttons = ["OK"],
                 width=800, height=500)
