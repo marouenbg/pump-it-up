@@ -2,7 +2,8 @@ import smbus
 
 import time
 
-# Get I2C busbus = smbus.SMBus(1)
+# Get I2C bus
+bus = smbus.SMBus(1)
 
 # ADXL345 address, 0x53(83)
 
