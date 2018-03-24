@@ -131,7 +131,7 @@ class Controller(HasTraits):
         of our viewer object.
         """
         # Generate a new number and increment the tick count
-	    x, y, z=accel.read()
+        x, y, z = accel.read()
         new_val = x
         self.num_ticks += 1
 
