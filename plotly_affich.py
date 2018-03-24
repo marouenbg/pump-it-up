@@ -79,10 +79,7 @@ trace2 = Scatter(
 layout = Layout(
     title='Raspberry Pi Streaming Sensor Data'
 )
-fig = tools.make_subplot(rows=1, cols=2)
-fig.append_trace(trace1, 1, 1)
-fig.append_trace(trace2, 1, 2)
-#fig = Figure(data=[trace1], layout=layout)
+fig = Figure(data=[trace1], layout=layout)
 
 print py.plot(fig, filename='Raspberry Pi Streaming Example Values')
 
