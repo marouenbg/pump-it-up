@@ -1,7 +1,7 @@
 import plotly.plotly as py # plotly library
 from plotly.graph_objs import Scatter, Layout, Figure # plotly graph objects
 import time # timer functions
-import readadc # helper functions to read ADC from the Raspberry Pi
+#import readadc # helper functions to read ADC from the Raspberry Pi
 
 # Simple demo of of the ADXL345 accelerometer library.  Will print the X, Y, Z
 # axis acceleration values every half second.
@@ -52,12 +52,12 @@ api_key = 'Ql12pHYX2G8XdHHiCNhA'
 stream_token = 'dhiunsixh2'
 
 print('Printing X, Y, Z axis values, press Ctrl-C to quit...')
-while True:
-    # Read the X, Y, Z axis acceleration values and print them.
-    x, y, z = accel.read()
-    print('X={0}, Y={1}, Z={2}'.format(x, y, z))
-    # Wait half a second and repeat.
-    time.sleep(0.5)
+#while True:
+#    # Read the X, Y, Z axis acceleration values and print them.
+#    x, y, z = accel.read()
+#    print('X={0}, Y={1}, Z={2}'.format(x, y, z))
+#    # Wait half a second and repeat.
+#    time.sleep(0.5)
 
 py.sign_in(username, api_key)
 
