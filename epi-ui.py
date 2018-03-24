@@ -39,9 +39,25 @@ def _create_plot_component(obj):
     obj.spectrum_plot.index_axis.title = 'Frequency (Hz)'
     obj.spectrum_plot.value_axis.title = 'Amplitude'
 
+    yaxis = linspace(0.0, float(SAMPLING_RATE) / 2, num=NUM_SAMPLES / 2)
+    obj.yaxis_data = ArrayPlotData(frequency=yaxis)
+    empty_amplitude = zeros(NUM_SAMPLES / 2)
+    obj.yaxis_data.set_data('amplitude', empty_amplitude)
+
+    obj.yaxis_plot = Plot(obj.spectrum_data)
+    obj.yaxis_plot.plot(("frequency", "amplitude"), name="yaxis",
+                           color="red")
+    obj.yaxis_plot.padding = 50
+    obj.yaxis_plot.title = "Spectrum"
+    spec_range = obj.yaxis_plot.plots.values()[0][0].value_mapper.range
+    spec_range.low = 0.0
+    spec_range.high = 5.0
+    obj.yaxis_plot.index_axis.title = 'Frequency (Hz)'
+    obj.yaxis_plot.value_axis.title = 'Amplitude'
 
     container = HPlotContainer()
     container.add(obj.spectrum_plot)
+    container.add(obj.yaxis)
 
     return container
 
@@ -234,6 +250,7 @@ class Demo(HasTraits):
         return super(Demo, self).edit_traits(*args, **kws)
 
     def configure_traits(self, *args, **kws):
+        # type: (object, object) -> object
         # Start up the timer! We should do this only when the demo actually
         # starts and not when the demo object is created.
         self.timer = Timer(20, self.controller.onTimer)
@@ -242,5 +259,4 @@ class Demo(HasTraits):
 popup = Demo()
 
 if __name__ == "__main__":
-    try:
-        popup.configure_traits()
+    popup.configure_traits()
