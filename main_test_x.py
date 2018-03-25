@@ -111,7 +111,7 @@ class Viewer(HasTraits):
                               type_trait="plot_type",
                               resizable=True,
                               x_label="Time",
-                              y_label="Tremblements",
+                              y_label="X_Tremblements",
                               color="blue",
                               bgcolor="white",
                               border_visible=True,
