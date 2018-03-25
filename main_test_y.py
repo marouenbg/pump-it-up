@@ -108,11 +108,11 @@ class Viewer(HasTraits):
     plot_type = Enum("line", "scatter")
 
     view = View(ChacoPlotItem("index", "data",
-                              type_trait="plot",
+                              type_trait="plot_type",
                               resizable=True,
                               x_label="Time",
-                              y_label="Tremblements",
-                              color="blue",
+                              y_label="Y_Tremblements",
+                              color="green",
                               bgcolor="white",
                               border_visible=True,
                               border_width=1,
@@ -131,8 +131,6 @@ class Controller(HasTraits):
 
     # A reference to the plot viewer object
     viewer = Instance(Viewer)
-
-    container = HPlotContainer()
 
     # Some parameters controller the random signal that will be generated
     distribution_type = Enum("normal")
@@ -166,7 +164,7 @@ class Controller(HasTraits):
         of our viewer object.
         """
         # Generate a new number and increment the tick count
-	x, y, z=accel.read()
+	    #x, y, z=accel.read()
 
         # ADXL345 address, 0x53(83)
         # Select bandwidth rate register, 0x2C(44)
@@ -224,7 +222,7 @@ class Controller(HasTraits):
         # print "Acceleration in X-Axis : %d" %xAccl
         # print "Acceleration in Y-Axis : %d" %yAccl
         # print "Acceleration in Z-Axis : %d" %zAccl
-        new_val = x
+        new_val = yAccl
         self.num_ticks += 1
 
         # grab the existing data, truncate it, and append the new point.
@@ -240,13 +238,13 @@ class Controller(HasTraits):
 
     def _distribution_type_changed(self):
         # This listens for a change in the type of distribution to use.
-            #while True:
+            while True:
                 # Read the X, Y, Z axis acceleration values and print them.
-                #x, y, z = accel.read()
-                #print('X={0}, Y={1}, Z={2}'.format(x, y, z))
+                x, y, z = accel.read()
+                print('X={0}, Y={1}, Z={2}'.format(x, y, z))
                 # Wait half a second and repeat.
-                #time.sleep(0.1)
-            self._generator = 1
+                time.sleep(0.1)
+            self._generator = x
 
 
 class DemoHandler(Handler):
@@ -258,13 +256,6 @@ class DemoHandler(Handler):
 
         info.object.timer.Stop()
         return
-
-def _create_plot_component(obj):
-    container = HPlotContainer()
-    controller=Instance(Controller)
-    viewer=Instance(Viewer, ())
-    container.add(controller)
-    return container
 
 
 class Demo(HasTraits):
@@ -288,23 +279,17 @@ class Demo(HasTraits):
         self.timer=Timer(100, self.controller.timer_tick)
         return super(Demo, self).configure_traits(*args, **kws)
 
-    #def _controller_default(self):
-    #    return Controller(viewer=self.viewer)
-    def _create_plot_component(obj):
-        controller=Instance(Controller)
-        viewer=Instance(Viewer, ())
-        container.add(Controller(viewer=self.viewer))
-        return container
-
-    def __init__(self, **traits):
-        super(Demo, self).__init__(**traits)
-        self.plot = _create_plot_component(self.controller)
+    def _controller_default(self):
+        return Controller(viewer=self.viewer)
 
 
 # NOTE: examples/demo/demo.py looks for a 'demo' or 'popup' or 'modal popup'
 # keyword when it executes this file, and displays a view for it.
 popup=Demo()
 
+
 if __name__ == "__main__":
     popup.configure_traits()
+
+
 
